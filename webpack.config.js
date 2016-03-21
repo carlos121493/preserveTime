@@ -22,7 +22,7 @@ module.exports = {
         loaders:[{
             test:/\.(js|jsx)$/,
             loaders:['babel'],
-            include: path.join(__dirname, 'panel')
+            include: path.join(__dirname, 'panel'),
         },{
             test:/\.css$/,
             loader:'style!css',
