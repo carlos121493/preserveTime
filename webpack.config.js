@@ -12,6 +12,9 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: '/static',
     },
+    resolve: {
+        extensions: ['', '.js', '.jsx'],
+    },
     plugins:[
         new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
@@ -23,6 +26,12 @@ module.exports = {
             test:/\.(js|jsx)$/,
             loaders:['babel'],
             include: path.join(__dirname, 'panel'),
+            plugins: [
+                'add-module-exports',
+                'typecheck',
+                'transform-decorators-legacy',
+                'antd',
+            ],
         },{
             test:/\.css$/,
             loader:'style!css',
