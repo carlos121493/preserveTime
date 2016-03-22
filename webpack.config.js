@@ -1,11 +1,12 @@
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry:[
         'eventsource-polyfill',
         'webpack-hot-middleware/client',
-        './panel/preserve'
+        './panel/preserve',
     ],
     output:{
         path: path.join(__dirname,'dist'),
@@ -13,13 +14,18 @@ module.exports = {
         publicPath: '/static',
     },
     resolve: {
+        modulesDirectories: ['node_modules', path.join(__dirname, '../node_modules')],
         extensions: ['', '.js', '.jsx'],
     },
     plugins:[
         new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
             __DEBUG__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
-        })
+        }),
+        new ExtractTextPlugin('[name].css', {
+            disable: false,
+            allChunks: true,
+        }),
     ],
     module:{
         loaders:[{
@@ -28,16 +34,14 @@ module.exports = {
             include: path.join(__dirname, 'panel'),
             plugins: [
                 'add-module-exports',
-                'typecheck',
-                'transform-decorators-legacy',
                 'antd',
             ],
         },{
             test:/\.css$/,
-            loader:'style!css',
+            loader: ExtractTextPlugin.extract('css'),
         },{
             test:/\.less$/,
-            loader:'style!less',
+            loader: ExtractTextPlugin.extract('css!less?{"sourceMap":true,"modifyVars":${JSON.stringify(pkg.theme || {})}}'),
         }]
     }
 };
