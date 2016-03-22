@@ -32,10 +32,6 @@ module.exports = {
             test:/\.(js|jsx)$/,
             loaders:['babel'],
             include: path.join(__dirname, 'panel'),
-            plugins: [
-                'add-module-exports',
-                'antd',
-            ],
         },{
             test:/\.css$/,
             loader: ExtractTextPlugin.extract('css'),
