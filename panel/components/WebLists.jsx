@@ -26,9 +26,7 @@ const WebLists = React.createClass({
           url: req.url,
           method: req.method,
         })
-        self.setState({
-          questions
-        });
+        self.setState({questions});
         chrome.runtime.sendMessage(chrome.devtools.tabId, {"hello": "world"});
       });
     });
