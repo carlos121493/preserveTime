@@ -10,7 +10,7 @@ const WebLists = React.createClass({
     };
   },
 
-  componentDidMount() {
+  getLinks() {
     const {questions} = this.state;
     const self = this;
     chrome.devtools.network.getHAR(function(result) {
@@ -33,12 +33,49 @@ const WebLists = React.createClass({
     });
   },
 
+  addConnect() {
+    const {questions} = this.state;
+    this.connect = chrome.runtime.connect({page: 'devtools-page'});
+    this.connect.onMessage.addListener(function (message) {
+      questions.push({
+        url: message,
+        method: message,
+        content: message,
+      })
+    });
+    chrome.runtime.sendMessage({
+      tabId: chrome.devtools.inspectedWindow.tabId,
+      scriptToInject: "content_script.js",
+    });
+  },
+
+  getInfo(){
+    const {questions} = this.state;
+    this.connect.onMessage.addListener((message) => {
+      questions.push({
+        url: message,
+        method: message,
+        content: message,
+      });
+    });
+  },
+
+  reload() {
+    chrome.devtools.inspectedWindow.reload({ignoreCache: true});
+  },
+
+  componentDidMount() {
+    this.getLinks();
+    this.addConnect();
+    this.getInfo();
+  },
+
   render() {
     const {questions} = this.state;
     const ListInfo = questions.map(item => {
       return <ListItem {...item} />;
     })
-    return (<div>{ListInfo}<Button>ceshi</Button></div>);
+    return (<div>{ListInfo}<Button onClick={this.reload}>reload</Button></div>);
   },
 });
 
