@@ -3,14 +3,13 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    entry:[
-        'eventsource-polyfill',
-        'webpack-hot-middleware/client',
-        './panel/preserve',
-    ],
+    entry:{
+      'preserve': './panel/preserve',
+       'background': './background',
+    },
     output:{
         path: path.join(__dirname,'dist'),
-        filename: 'bundle.js',
+        filename: '[name].js',
         publicPath: '/static',
     },
     resolve: {
@@ -37,7 +36,7 @@ module.exports = {
             loader: ExtractTextPlugin.extract('css'),
         },{
             test:/\.less$/,
-            loader: ExtractTextPlugin.extract('css!less?{"sourceMap":true,"modifyVars":${JSON.stringify(pkg.theme || {})}}'),
+            loader: ExtractTextPlugin.extract('css!less?{"sourceMap":true,"modifyVars":{"primary-color":"#1DA57A"}}'),
         }]
     }
 };

@@ -5,14 +5,30 @@ const ListItem = React.createClass({
   propTypes: {
     method: PropTypes.string,
     url: PropTypes.string,
+    content: PropTypes.string,
+  },
+
+  getInitialState() {
+    return {
+      showDetail: false,
+    };
+  },
+
+  toggle() {
+    const {showDetail} = this.state;
+    this.setState({
+      showDetail: !showDetail,
+    });
   },
 
   render() {
-    const {name, method, url} = this.props;
+    const {method, url, content} = this.props;
 
-    return (<div style={{borderBottom: '1px solid #ccc'}}>
-      <Tag>{method}</Tag>
-      <span style={{padding: '0 5px'}}>{url}</span>
+    return (<div className="web-list-item"><div className="web-list-item-title" onClick={this.toggle}>
+        <Tag color={content && content.status == 200 ? 'green' : 'blue' }>{method}</Tag>
+        <span style={{padding: '0 5px'}}>{url}</span>
+      </div>
+      {this.state.showDetail ? <div className="web-list-item-content">{JSON.stringify(content)}</div> : null}
     </div>);
   },
 });
