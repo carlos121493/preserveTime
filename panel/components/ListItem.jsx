@@ -24,11 +24,11 @@ const ListItem = React.createClass({
   render() {
     const {method, url, content} = this.props;
 
-    return (<div><div style={{borderBottom: '1px solid #ccc'}} onClick={this.toggle}>
+    return (<div className="web-list-item"><div className="web-list-item-title" onClick={this.toggle}>
         <Tag color={content && content.status == 200 ? 'green' : 'blue' }>{method}</Tag>
         <span style={{padding: '0 5px'}}>{url}</span>
       </div>
-      {this.state.showDetail ? <div style={{padding: 10}}>{JSON.stringify(content)}</div> : null}
+      {this.state.showDetail ? <div className="web-list-item-content">{JSON.stringify(content)}</div> : null}
     </div>);
   },
 });
