@@ -35,18 +35,18 @@ const WebLists = React.createClass({
 
   addConnect() {
     const {questions} = this.state;
-    this.connect = chrome.runtime.connect({page: 'devtools-page'});
-    this.connect.onMessage.addListener(function (message) {
-      questions.push({
-        url: message,
-        method: message,
-        content: message,
-      })
-    });
-    chrome.runtime.sendMessage({
-      tabId: chrome.devtools.inspectedWindow.tabId,
-      scriptToInject: "content_script.js",
-    });
+    // this.connect = chrome.runtime.connect({page: 'devtools-page'});
+    // this.connect.onMessage.addListener(function (message) {
+    //   questions.push({
+    //     url: message,
+    //     method: message,
+    //     content: message,
+    //   })
+    // });
+    // chrome.runtime.sendMessage({
+    //   tabId: chrome.devtools.inspectedWindow.tabId,
+    //   scriptToInject: "content_script.js",
+    // });
   },
 
   getInfo(){
@@ -64,6 +64,10 @@ const WebLists = React.createClass({
     chrome.devtools.inspectedWindow.reload({ignoreCache: true});
   },
 
+  clear() {
+    this.setState({questions: []});
+  },
+
   componentDidMount() {
     this.getLinks();
     this.addConnect();
@@ -75,7 +79,10 @@ const WebLists = React.createClass({
     const ListInfo = questions.map(item => {
       return <ListItem {...item} />;
     })
-    return (<div>{ListInfo}<Button onClick={this.reload}>reload</Button></div>);
+    return (<div>
+      <Button onClick={this.reload}>reload</Button><Button onClick={this.clear}>clear</Button>
+      {ListInfo}
+    </div>);
   },
 });
 
