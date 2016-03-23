@@ -25,7 +25,7 @@ const WebLists = React.createClass({
         questions.push({
           url: req.url,
           method: req.method,
-          content: JSON.stringify(item.response),
+          content: item.response,
         })
         self.setState({questions});
         chrome.runtime.sendMessage(chrome.devtools.tabId, {"hello": "world"});
