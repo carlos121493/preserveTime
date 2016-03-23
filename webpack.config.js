@@ -36,7 +36,7 @@ module.exports = {
             loader: ExtractTextPlugin.extract('css'),
         },{
             test:/\.less$/,
-            loader: ExtractTextPlugin.extract('css!less?{"sourceMap":true,"modifyVars":${JSON.stringify(pkg.theme || {})}}'),
+            loader: ExtractTextPlugin.extract('css!less?{"sourceMap":true,"modifyVars":{"primary-color":"#1DA57A"}}'),
         }]
     }
 };

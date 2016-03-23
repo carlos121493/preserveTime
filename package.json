@@ -43,6 +43,7 @@
     "koa-static": "^2.0.0",
     "koa-webpack-dev-middleware": "^1.2.0",
     "less": "^2.6.1",
+    "less-loader": "^2.2.2",
     "object-assign": "^4.0.1",
     "pre-commit": "^1.1.2",
     "react": "^0.14.7",
@@ -59,7 +60,11 @@
       "react",
       "react-hmre"
     ],
-    "plugins": ["add-module-exports", "typecheck","antd"]
+    "plugins": [
+      "add-module-exports",
+      "typecheck",
+      "antd"
+    ]
   },
   "pre-commit": [
     "lint"
