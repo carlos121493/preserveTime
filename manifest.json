@@ -4,7 +4,7 @@
 	"manifest_version": 2,
 	"description": "A tool for preserve interface",
 	"background": {
-		"scripts": ["background.js"],
+		"scripts": ["./dist/background.js"],
 		"persistent": true
 	},
 	"devtools_page": "devtools.html",
