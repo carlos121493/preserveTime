@@ -80,8 +80,8 @@ const WebLists = React.createClass({
       return <ListItem {...item} />;
     })
     return (<div>
-      <Button onClick={this.reload}>reload</Button><Button onClick={this.clear}>clear</Button>
-      {ListInfo}
+      <div className="preserve-btn-group"><Button onClick={this.reload}>reload</Button><Button onClick={this.clear}>clear</Button></div>
+      <div className="preserve-container">{ListInfo}</div>
     </div>);
   },
 });
