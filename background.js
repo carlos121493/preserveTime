@@ -8,3 +8,5 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
         code: "("+ tab_log + ")('" + msg + "');",
     });
 });
+
+chrome.tabs.executeScript(null, {file: "content_script.js"});

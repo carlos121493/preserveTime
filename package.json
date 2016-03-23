@@ -60,8 +60,5 @@
       "react-hmre"
     ],
     "plugins": ["add-module-exports", "typecheck","antd"]
-  },
-  "pre-commit": [
-    "lint"
-  ]
+  }
 }
