@@ -4,8 +4,8 @@
 	"manifest_version": 2,
 	"description": "A tool for preserve interface",
 	"background": {
-		"scripts": ["./dist/background.js"],
-		"persistent": false
+		"scripts": ["background.js"],
+		"persistent": true
 	},
 	"content_scripts": [{
 		"exclude_globs": [  ],
@@ -16,6 +16,8 @@
 	}],
 	"devtools_page": "devtools.html",
 	"permissions": [
+		"webRequest",
+		"webRequestBlocking",
 		"tabs",
 		"http://*/*",
 		"https://*/*"

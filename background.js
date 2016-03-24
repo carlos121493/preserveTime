@@ -13,10 +13,34 @@
 chrome.runtime.onConnect.addListener(function (port) {
     var extensionListener = function(message, sender, sendResponse) {
         chrome.tabs.executeScript(message.tabId, { file: message.scriptToInject });
-        sendResponse({hehe:'finished'});
     };
     port.onMessage.addListener(extensionListener);
     port.onDisConnect.addListener(function (port) {
-        port.onMessage.removeListener(extensionListener);
+      port.onMessage.removeListener(extensionListener);
     });
 });
+function sendMessage(message) {
+    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+        lastTabId = tabs[0].id;
+        chrome.tabs.sendMessage(lastTabId, message);
+    });
+}
+chrome.webRequest.onCompleted.addListener(function (item) {
+    sendMessage(JSON.stringify(item));
+}, {
+  urls: [
+    "http://*/*"
+  ], types:["xmlhttprequest"]
+});
+
+chrome.webRequest.onErrorOccurred.addListener(function (item) {
+    sendMessage(JSON.stringify(item));
+}, {
+    urls: [
+      "*://*/*"
+    ], types:["xmlhttprequest"]
+});
+
+// chrome.webRequest.onResponseStarted.addListener(function(item) {
+//     alert(JSON.stringify(item));
+// });

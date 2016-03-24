@@ -16,6 +16,11 @@ const WebLists = React.createClass({
     chrome.devtools.network.getHAR(function(result) {
       const entries = result.entries;
       for (let i = 0; i < entries.length; ++i) {
+        // questions.push({
+        //   url: 'cc',
+        //   method: 'cc',
+        //   content: entries[i],
+        // })
         // alert(JSON.stringify(entries[i]));
       }
 
@@ -25,8 +30,8 @@ const WebLists = React.createClass({
         questions.push({
           url: req.url,
           method: req.method,
-          content: item.response,
-        })
+          content: itemInfo.response.content,
+        });
         self.setState({questions});
         chrome.runtime.sendMessage(chrome.devtools.tabId, {"hello": "world"});
       });
