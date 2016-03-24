@@ -27,12 +27,17 @@ const WebLists = React.createClass({
       chrome.devtools.network.onRequestFinished.addListener((item) => {
         const itemInfo = {...item};
         const req = itemInfo.request;
-        questions.push({
-          url: req.url,
-          method: req.method,
-          content: itemInfo.response.content,
+        item.getContent(content => {
+          const isAjax = req.headers.find(head => {return head.name === "X-Requested-With";});
+          if(isAjax) {
+            questions.push({
+              url: req.url,
+              method: req.method,
+              content: content,
+            });
+            self.setState({questions});
+          }
         });
-        self.setState({questions});
         chrome.runtime.sendMessage(chrome.devtools.tabId, {"hello": "world"});
       });
     });
